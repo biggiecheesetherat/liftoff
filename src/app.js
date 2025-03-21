@@ -98,8 +98,8 @@ const toolbox = ```
 }
 ```
 let def = []
-const workspace = Blockly.inject('blocklyDiv');
-const def[0] = JSON.parse(```
+const workspace = Blockly.inject('blocklyDiv', {toolbox: toolbox});
+def[0] = JSON.parse(```
 {
   "type": "sprite",
   "tooltip": "",
@@ -139,7 +139,7 @@ function spriteToBlockly(sprites){
   };
   return newarr
 };
-const def[1] = ```
+def[1] = ```
 {
   "type": "sprite_setValue",
   "tooltip": "",
@@ -198,7 +198,7 @@ const def[1] = ```
 }
                     
 ```
-const def[2] = ```
+def[2] = ```
 {
   "type": "sprite_getValue",
   "tooltip": "",
