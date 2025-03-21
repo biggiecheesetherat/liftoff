@@ -97,6 +97,7 @@ const toolbox = ```
   ]
 }
 ```
+let def = []
 const workspace = Blockly.inject('blocklyDiv');
 const def[0] = JSON.parse(```
 {
