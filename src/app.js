@@ -1,6 +1,6 @@
-//init all the blocks
+// Init all the blocks
 // Passes the ID.
-const toolbox = ```
+const toolbox = `
 {
   "kind": "flyoutToolbox",
   "contents": [
@@ -96,10 +96,13 @@ const toolbox = ```
     }
   ]
 }
-```
-let def = []
-const workspace = Blockly.inject('blocklyDiv', {toolbox: toolbox});
-def[0] = JSON.parse(```
+`;
+
+let def = [];
+
+const workspace = Blockly.inject('blocklyDiv', { toolbox: JSON.parse(toolbox) });
+
+def[0] = JSON.parse(`
 {
   "type": "sprite",
   "tooltip": "",
@@ -109,14 +112,14 @@ def[0] = JSON.parse(```
     {
       "type": "field_input",
       "name": "uid",
-      "value": 0,
-      "min": 0
+      "text": "0"
     }
   ],
   "output": "sprite",
   "colour": 315
-}                   
-```);
+}
+`);
+
 let sprites = [{
   name: "Testificate",
   x: 0,
@@ -126,20 +129,21 @@ let sprites = [{
   a: 255,
   color: "#00000000",
   anim: ""
-}]
+}];
 
-function spriteToBlockly(sprites){
-  let newarr = []
-  let arr = []
+function spriteToBlockly(sprites) {
+  let newarr = [];
+  let arr = [];
   for (let i = 0; i < sprites.length; i++) {
     arr.push(sprites[i].name);
-  };
+  }
   for (let i = 0; i < arr.length; i++) {
-    newarr.push("${[arr[i]}", "${i}"]);
-  };
-  return newarr
-};
-def[1] = ```
+    newarr.push([`${arr[i]}`, `${i}`]);
+  }
+  return newarr;
+}
+
+def[1] = JSON.parse(`
 {
   "type": "sprite_setValue",
   "tooltip": "",
@@ -149,42 +153,19 @@ def[1] = ```
     {
       "type": "field_input",
       "name": "sprite",
-      "value": 0,
-      "min": 0
-    }
+      "text": "0"
     },
     {
       "type": "field_dropdown",
       "name": "variable",
       "options": [
-        [  
-          "x",
-          "x"
-        ],
-        [
-          "y",
-          "y"
-        ],
-        [
-          "width",
-          "w"
-        ],
-        [
-          "height",
-          "h"
-        ],
-        [
-          "color",
-          "color"
-        ],
-        [
-          "opacity",
-          "alpha"
-        ],
-        [
-          "animation",
-          "anim"
-        ]
+        ["x", "x"],
+        ["y", "y"],
+        ["width", "w"],
+        ["height", "h"],
+        ["color", "color"],
+        ["opacity", "a"],
+        ["animation", "anim"]
       ]
     },
     {
@@ -196,9 +177,9 @@ def[1] = ```
   "nextStatement": null,
   "colour": 315
 }
-                    
-```
-def[2] = ```
+`);
+
+def[2] = JSON.parse(`
 {
   "type": "sprite_getValue",
   "tooltip": "",
@@ -208,75 +189,49 @@ def[2] = ```
     {
       "type": "field_input",
       "name": "sprite",
-      "value": 0,
-      "min": 0
-    }
+      "text": "0"
     },
     {
       "type": "field_dropdown",
       "name": "variable",
       "options": [
-        [  
-          "x",
-          "x"
-        ],
-        [
-          "y",
-          "y"
-        ],
-        [
-          "width",
-          "w"
-        ],
-        [
-          "height",
-          "h"
-        ],
-        [
-          "color",
-          "color"
-        ],
-        [
-          "opacity",
-          "alpha"
-        ],
-        [
-          "animation",
-          "anim"
-        ]
+        ["x", "x"],
+        ["y", "y"],
+        ["width", "w"],
+        ["height", "h"],
+        ["color", "color"],
+        ["opacity", "a"],
+        ["animation", "anim"]
       ]
     }
   ],
   "output": null,
   "colour": 315
 }
-                    
-```
-const definitions = Blockly.createBlockDefinitionsFromJsonArray(def);
-javascript.javascriptGenerator.forBlock['sprite'] = function() {
-  const index = block.getFieldValue('uid');
+`);
 
-  // TODO: Assemble javascript into the code variable.
-  const code = "return " + sprites[index];
+const definitions = Blockly.common.createBlockDefinitionsFromJsonArray(def);
+
+javascript.javascriptGenerator.forBlock['sprite'] = function(block) {
+  const index = block.getFieldValue('uid');
+  const code = `sprites[${index}]`;
   return [code, javascript.Order.NONE];
-}
-javascript.javascriptGenerator.forBlock['sprite_getValue'] = function() {
+};
+
+javascript.javascriptGenerator.forBlock['sprite_getValue'] = function(block) {
   const index = block.getFieldValue('sprite');
   const v = block.getFieldValue('variable');
-  
-
-  // TODO: Assemble javascript into the code variable.
-  const code = "return sprites[index].${v}";
+  const code = `sprites[${index}].${v}`;
   return [code, javascript.Order.NONE];
-}
-javascript.javascriptGenerator.forBlock['sprite_setValue'] = function() {
+};
+
+javascript.javascriptGenerator.forBlock['sprite_setValue'] = function(block) {
   const s = block.getFieldValue('sprite');
   const v = block.getFieldValue('variable');
-  const r = block.getFieldValue('value');
-
-  // TODO: Assemble javascript into the code variable.
-  const code = 'sprites[${s}].${v} = ${r}';
+  const r = javascript.javascriptGenerator.valueToCode(block, 'value', javascript.Order.NONE) || '0';
+  const code = `sprites[${s}].${v} = ${r};\n`;
   return code;
-}
+};
+
 // Register the definition.
-Blockly.defineBlocks(definitions);
+Blockly.defineBlocksWithJsonArray(definitions);
