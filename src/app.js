@@ -17,9 +17,11 @@ const def[0] = JSON.parse(```
 }                   
 ```);
 function arrayToBlockly(arr){
+  let newarr = []
   for (let i = 0; i < arr.length; i++) {
-    // unfinished
+    newarr.push("${[arr[i]}", "${i}"]);
   };
+  return newarr
 };
 const def[1] = ```
 {
