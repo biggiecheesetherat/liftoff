@@ -1,4 +1,103 @@
 //init all the blocks
+// Passes the ID.
+const toolbox = ```
+{
+  "kind": "flyoutToolbox",
+  "contents": [
+    {
+      "kind": "category",
+      "name": "Logic",
+      "colour": "%{BKY_LOGIC_HUE}",
+      "contents": [
+        { "kind": "block", "type": "controls_if" },
+        { "kind": "block", "type": "logic_compare" },
+        { "kind": "block", "type": "logic_operation" },
+        { "kind": "block", "type": "logic_negate" },
+        { "kind": "block", "type": "logic_boolean" },
+        { "kind": "block", "type": "logic_null" },
+        { "kind": "block", "type": "logic_ternary" }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Loops",
+      "colour": "%{BKY_LOOPS_HUE}",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "controls_repeat_ext",
+          "inputs": {
+            "TIMES": {
+              "block": {
+                "type": "math_number",
+                "fields": { "NUM": 10 }
+              }
+            }
+          }
+        },
+        { "kind": "block", "type": "controls_whileUntil" },
+        { "kind": "block", "type": "controls_for" },
+        { "kind": "block", "type": "controls_forEach" },
+        { "kind": "block", "type": "controls_flow_statements" }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Math",
+      "colour": "%{BKY_MATH_HUE}",
+      "contents": [
+        { "kind": "block", "type": "math_number" },
+        {
+          "kind": "block",
+          "type": "math_arithmetic",
+          "inputs": {
+            "A": {
+              "block": {
+                "type": "math_number",
+                "fields": { "NUM": 1 }
+              }
+            },
+            "B": {
+              "block": {
+                "type": "math_number",
+                "fields": { "NUM": 1 }
+              }
+            }
+          }
+        },
+        {
+          "kind": "block",
+          "type": "math_single",
+          "inputs": {
+            "NUM": {
+              "block": {
+                "type": "math_number",
+                "fields": { "NUM": 9 }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Sprites",
+      "colour": "#FFA500",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "sprite_setValue"
+        },
+        {
+          "kind": "block",
+          "type": "sprite_getValue"
+        }
+      ]
+    }
+  ]
+}
+```
+const workspace = Blockly.inject('blocklyDiv');
 const def[0] = JSON.parse(```
 {
   "type": "sprite",
@@ -27,6 +126,7 @@ let sprites = [{
   color: "#00000000",
   anim: ""
 }]
+
 function spriteToBlockly(sprites){
   let newarr = []
   let arr = []
