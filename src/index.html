@@ -16,9 +16,35 @@
          flex-grow: 1;
          height: 100%;
          }
+         .navbar1 {
+            display: inline;
+         }
+         .navbar2 {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+         }
+         .navbar3 {
+              display: block;
+              color: white;
+              text-align: center;
+              padding: 14px 16px;
+              text-decoration: none;
+         }
+         .navbar3:hover {
+            background-color: #111;
+         }
       </style>
    </head>
    <body>
+      <ul class="navbar2">
+  <li class="navbar1"><a class="navbar3" href="#home">Test 1</a></li>
+  <li class="navbar1"><a class="navbar3"href="#news">Test 2</a></li>
+  <li class="navbar1"><a class="navbar3"href="#contact">Test 3</a></li>
+  <li class="navbar1"><a class="navbar3" onclick="alert('Liftoff v0.01 by Themeatly2 + Harsizcool');">About</a></li>
+</ul>
       <div id="blocklyDiv"></div>
       <xml id="toolbox" style="display: none">
          <category name="Logic" colour="#5b80a5">
