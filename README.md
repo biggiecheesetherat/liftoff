@@ -1,2 +1,2 @@
 # liftoff
-Open-source Julian's Editor Alternative
+Advanced Julian's Editor Alternative
