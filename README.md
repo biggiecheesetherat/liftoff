@@ -8,5 +8,4 @@ Liftoff is designed to be lightweight, fast, and highly customizable. Whether yo
 Liftoff uses Blockly 10 as its block-based editor. If you're creating custom blocks, make sure to generate them using this Blockly Block Factory. This ensures compatibility with the latest version of Liftoff.
 
 ## 🚀 Getting Started
-To start using Liftoff, simply clone the repository and open index.html in your browser. No installations or dependencies required—just pure web-based block coding!
-
+To start using Liftoff, simply goto liftoff.top (TODO: setup domain)! No hassle, no risk from installing unknown exes, as long as you have Wi-Fi.
