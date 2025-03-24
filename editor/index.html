@@ -449,7 +449,7 @@
            var code = value_code + '\n';
            return code;
          };
-         javascript.javascriptGenerator.forBlock['raw_block'] = function(block, generator) {
+         javascript.javascriptGenerator.forBlock['raw_value'] = function(block, generator) {
            var value_code = generator.valueToCode(block, 'CODE', javascript.Order.ATOMIC);
            // TODO: Assemble javascript into code variable.
            var code = value_code;
