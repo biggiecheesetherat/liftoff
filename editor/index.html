@@ -43,7 +43,7 @@
          <noscript>Enable Javascript</noscript>
   <li class="navbar1"><a class="navbar3" href="#home">File</a></li>
   <li class="navbar1"><a class="navbar3"href="#news">Edit</a></li>
-           <li class="navbar1"><a class="navbar3"href="#contact">Controls</a></li>
+           <li class="navbar1"><a class="navbar3"href="#"onclick="execute()">Run</a></li>
   <li class="navbar1"><a class="navbar3" href="#" onclick="alert('Liftoff Alpha by Themeatly2 + Harsizcool');">Help</a></li>
 </ul>
       <div id="blocklyDiv"></div>
@@ -397,6 +397,51 @@
              this.setHelpUrl("");
            }
          };
+         Blockly.Blocks['sprite'] = {
+           init: function() {
+              this.appendValueInput("NAME")
+                 .setCheck(["String", "Number"])
+                 .appendField("set sprite #")
+                 .appendField(new Blockly.FieldNumber(0, 0), "SPRITE")
+                 .appendField("'s")
+                 .appendField(new Blockly.FieldDropdown([["x","x"], ["y","y"], ["size","size"], ["animation","anim"], ["opacity","opacity"]]), "ATT")
+                 .appendField("to");
+             this.setPreviousStatement(true, null);
+             this.setNextStatement(true, null);
+             this.setColour(230);
+             this.setTooltip("");
+             this.setHelpUrl("");
+         }
+      };
+      Blockly.Blocks['spriteget'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("get sprite #")
+        .appendField(new Blockly.FieldNumber(0, 0), "SPRITE")
+        .appendField("'s")
+        .appendField(new Blockly.FieldDropdown([["x","x"], ["y","y"], ["size","size"], ["animation","anim"], ["opacity","opacity"]]), "ATT");
+    this.setOutput(true, null);
+    this.setColour(230);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+         javascript.javascriptGenerator.forBlock['spriteget'] = function(block, generator) {
+  var number_sprite = block.getFieldValue('SPRITE');
+  var dropdown_att = block.getFieldValue('ATT');
+  // TODO: Assemble javascript into code variable.
+  var code = 'sprite[${number_sprite}].${dropdown_att}';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.javascript.ORDER_MEMBER];
+};
+      javascript.javascriptGenerator.forBlock['sprite'] = function(block, generator) {
+        var number_sprite = block.getFieldValue('SPRITE');
+        var dropdown_att = block.getFieldValue('ATT');
+        var value_name = generator.valueToCode(block, 'NAME', javascript.Order.ATOMIC);
+        // TODO: Assemble javascript into code variable.
+        var code = 'sprites[${number_sprite}].${dropdown_att} = ${value_name}\n';
+        return code;
+       };
          javascript.javascriptGenerator.forBlock['raw_block'] = function(block, generator) {
            var value_code = generator.valueToCode(block, 'CODE', javascript.Order.ATOMIC);
            // TODO: Assemble javascript into code variable.
@@ -410,6 +455,50 @@
            // TODO: Change ORDER_NONE to the correct strength.
            return [code, Blockly.javascript.ORDER_NONE];
          };
+         function execute(){
+            const code = javascriptGenerator.workspaceToCode(myWorkspace);
+            const html1 = ```
+            <html>
+            <head>
+            <title>My project</title>
+            <style>
+            body {
+            background-color: black;
+            }
+            </style>
+            </head>
+            <body>
+            <canvas id="game" width="320" height="240">
+            A game made in Liftoff.
+            </canvas>
+            <script>
+            ```
+            const html2 = ```
+            ${"</" + "script>"}
+            <noscript style="color: red;>You need javascript to play this game.</noscript>
+            </body>
+            </html>
+            ```
+            openBase64InNewTab(btoa(html1+code+html2), "text/html")
+         }
+         function openBase64InNewTab(data: string, mimeType: string) {
+  var byteCharacters = atob(data);
+  var byteNumbers = new Array(byteCharacters.length);
+
+  for (var i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+
+  var byteArray = new Uint8Array(byteNumbers);
+
+  var file = new Blob([byteArray], {
+    type: mimeType + ";base64",
+  });
+
+  var fileURL = URL.createObjectURL(file);
+
+  window.open(fileURL, "_blank");
+}
          const workspace = Blockly.inject('blocklyDiv', {
              toolbox: document.getElementById('toolbox'),
              renderer: 'zelos', // Scratch-like blocks
