@@ -5,6 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Liftoff</title>
       <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+      <script src="https://unpkg.com/blockly/javascript_compressed.js"></script>
       <style>
          body {
          margin: 0;
@@ -17,35 +18,35 @@
          height: 100%;
          }
          .navbar1 {
-            display: inline;
+         display: inline;
          }
          .navbar2 {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #333;
+         list-style-type: none;
+         margin: 0;
+         padding: 0;
+         overflow: hidden;
+         background-color: #333;
          }
          .navbar3 {
-              display: block;
-              color: white;
-              text-align: center;
-              padding: 14px 16px;
-              text-decoration: none;
+         display: block;
+         color: white;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
          }
          .navbar3:hover {
-            background-color: #111;
+         background-color: #111;
          }
       </style>
    </head>
    <body>
       <ul class="navbar2">
          <noscript>Enable Javascript</noscript>
-  <li class="navbar1"><a class="navbar3" href="#home">File</a></li>
-  <li class="navbar1"><a class="navbar3"href="#news">Edit</a></li>
-           <li class="navbar1"><a class="navbar3"href="#"onclick="execute()">Run</a></li>
-  <li class="navbar1"><a class="navbar3" href="#" onclick="alert('Liftoff Alpha by Themeatly2 + Harsizcool');">Help</a></li>
-</ul>
+         <li class="navbar1"><a class="navbar3" href="#home">File</a></li>
+         <li class="navbar1"><a class="navbar3"href="#news">Edit</a></li>
+         <li class="navbar1"><a class="navbar3"href="#"onclick="execute()">Run</a></li>
+         <li class="navbar1"><a class="navbar3" href="#" onclick="alert('Liftoff Alpha by Themeatly2 + Harsizcool');">Help</a></li>
+      </ul>
       <div id="blocklyDiv"></div>
       <xml id="toolbox" style="display: none">
          <category name="Logic" colour="#5b80a5">
@@ -412,36 +413,36 @@
              this.setTooltip("");
              this.setHelpUrl("");
          }
-      };
-      Blockly.Blocks['spriteget'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("get sprite #")
-        .appendField(new Blockly.FieldNumber(0, 0), "SPRITE")
-        .appendField("'s")
-        .appendField(new Blockly.FieldDropdown([["x","x"], ["y","y"], ["size","size"], ["animation","anim"], ["opacity","opacity"]]), "ATT");
-    this.setOutput(true, null);
-    this.setColour(230);
- this.setTooltip("");
- this.setHelpUrl("");
-  }
-};
+         };
+         Blockly.Blocks['spriteget'] = {
+         init: function() {
+         this.appendDummyInput()
+         .appendField("get sprite #")
+         .appendField(new Blockly.FieldNumber(0, 0), "SPRITE")
+         .appendField("'s")
+         .appendField(new Blockly.FieldDropdown([["x","x"], ["y","y"], ["size","size"], ["animation","anim"], ["opacity","opacity"]]), "ATT");
+         this.setOutput(true, null);
+         this.setColour(230);
+         this.setTooltip("");
+         this.setHelpUrl("");
+         }
+         };
          javascript.javascriptGenerator.forBlock['spriteget'] = function(block, generator) {
-  var number_sprite = block.getFieldValue('SPRITE');
-  var dropdown_att = block.getFieldValue('ATT');
-  // TODO: Assemble javascript into code variable.
-  var code = 'sprite[${number_sprite}].${dropdown_att}';
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.javascript.ORDER_MEMBER];
-};
-      javascript.javascriptGenerator.forBlock['sprite'] = function(block, generator) {
-        var number_sprite = block.getFieldValue('SPRITE');
-        var dropdown_att = block.getFieldValue('ATT');
-        var value_name = generator.valueToCode(block, 'NAME', javascript.Order.ATOMIC);
-        // TODO: Assemble javascript into code variable.
-        var code = 'sprites[${number_sprite}].${dropdown_att} = ${value_name}\n';
-        return code;
-       };
+         var number_sprite = block.getFieldValue('SPRITE');
+         var dropdown_att = block.getFieldValue('ATT');
+         // TODO: Assemble javascript into code variable.
+         var code = 'sprite[${number_sprite}].${dropdown_att}';
+         // TODO: Change ORDER_NONE to the correct strength.
+         return [code, Blockly.javascript.ORDER_MEMBER];
+         };
+         javascript.javascriptGenerator.forBlock['sprite'] = function(block, generator) {
+         var number_sprite = block.getFieldValue('SPRITE');
+         var dropdown_att = block.getFieldValue('ATT');
+         var value_name = generator.valueToCode(block, 'NAME', javascript.Order.ATOMIC);
+         // TODO: Assemble javascript into code variable.
+         var code = 'sprites[${number_sprite}].${dropdown_att} = ${value_name}\n';
+         return code;
+         };
          javascript.javascriptGenerator.forBlock['raw_block'] = function(block, generator) {
            var value_code = generator.valueToCode(block, 'CODE', javascript.Order.ATOMIC);
            // TODO: Assemble javascript into code variable.
@@ -482,23 +483,23 @@
             openBase64InNewTab(btoa(html1+code+html2), "text/html")
          }
          function openBase64InNewTab(data: string, mimeType: string) {
-  var byteCharacters = atob(data);
-  var byteNumbers = new Array(byteCharacters.length);
-
-  for (var i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-
-  var byteArray = new Uint8Array(byteNumbers);
-
-  var file = new Blob([byteArray], {
-    type: mimeType + ";base64",
-  });
-
-  var fileURL = URL.createObjectURL(file);
-
-  window.open(fileURL, "_blank");
-}
+         var byteCharacters = atob(data);
+         var byteNumbers = new Array(byteCharacters.length);
+         
+         for (var i = 0; i < byteCharacters.length; i++) {
+         byteNumbers[i] = byteCharacters.charCodeAt(i);
+         }
+         
+         var byteArray = new Uint8Array(byteNumbers);
+         
+         var file = new Blob([byteArray], {
+         type: mimeType + ";base64",
+         });
+         
+         var fileURL = URL.createObjectURL(file);
+         
+         window.open(fileURL, "_blank");
+         }
          const workspace = Blockly.inject('blocklyDiv', {
              toolbox: document.getElementById('toolbox'),
              renderer: 'zelos', // Scratch-like blocks
