@@ -482,7 +482,7 @@
             ```
             openBase64InNewTab(btoa(html1+code+html2), "text/html")
          }
-         function openBase64InNewTab(data: string, mimeType: string) {
+         function openBase64InNewTab(data, mimeType) {
             var byteCharacters = atob(data);
             var byteNumbers = new Array(byteCharacters.length);
          
