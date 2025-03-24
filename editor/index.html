@@ -458,6 +458,7 @@
          };
          function execute(){
             const code = javascript.javascriptGenerator.workspaceToCode(workspace)
+            alert("Debug: "+code);
             openBase64InNewTab(btoa(
               '<html><head><title>My project</title>' +
               '<style>body {background-color: black;}</style></head>' +
