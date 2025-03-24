@@ -458,17 +458,24 @@
          };
          function execute(){
             const code = javascript.javascriptGenerator.workspaceToCode(workspace)
-            alert("Debug: "+code);
+            alert("Debug: "+removeSurroundingQuotes(code));
             openBase64InNewTab(btoa(
               '<html><head><title>My project</title>' +
               '<style>body {background-color: black;}</style></head>' +
               '<body><canvas id="game" width="320" height="240">' +
               'A game made in Liftoff.</canvas>' +
-              '<script>' + code + '<\/script>' +
+              '<script>' +removeSurroundingQuotes(code) + '<\/script>' +
               '<noscript style="color: red;">You need JavaScript to play this game.</noscript>' +
               '</body></html>'
           ), "text/html");
          }
+         function removeSurroundingQuotes(str) {
+             if ((str.startsWith('"') && str.endsWith('"')) || (str.startsWith("'") && str.endsWith("'"))) {
+                 return str.slice(1, -1);
+             }
+             return str;
+         }
+
          function openBase64InNewTab(data, mimeType) {
             var byteCharacters = atob(data);
             var byteNumbers = new Array(byteCharacters.length);
