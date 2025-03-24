@@ -458,7 +458,7 @@
          };
          function execute(){
             const code = javascript.javascriptGenerator.workspaceToCode(workspace)
-            openBase64InNewTab(btoa('<html><head><title>My project</title><style>body {background-color: black;}</style></head><body><canvas id="game" width="320" height="240">A game made in Liftoff.</canvas><script>'+code+'</script><noscript style="color: red;>You need javascript to play this game.</noscript></body></html>), "text/html")
+            openBase64InNewTab(btoa('<html><head><title>My project</title><style>body {background-color: black;}</style></head><body><canvas id="game" width="320" height="240">A game made in Liftoff.</canvas><script>'+code+'</script'+'><noscript style="color: red;>You need javascript to play this game.</noscript></body></html>), "text/html")
          }
          function openBase64InNewTab(data, mimeType) {
             var byteCharacters = atob(data);
