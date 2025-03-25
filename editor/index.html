@@ -364,7 +364,7 @@
                <field name="DIRECTION">1</field>
             </block>
          </category>
-         <category name="Functions" colour="#995ba5" custom="PROCEDURE"/>
+         <category name="Functions" colour="#995ba5" custom="PROCEDURE"></category>
          <sep></sep>
          <category name="Game" colour=315>
             <block type="sprite">
@@ -444,7 +444,7 @@
          var number_sprite = block.getFieldValue('SPRITE');
          var dropdown_att = block.getFieldValue('ATT');
          // TODO: Assemble javascript into code variable.
-         var code = 'sprite[${number_sprite}].${dropdown_att}';
+         var code = `sprite[${number_sprite}].${dropdown_att}`;
          // TODO: Change ORDER_NONE to the correct strength.
          return [code, Blockly.javascript.ORDER_MEMBER];
          };
@@ -453,7 +453,7 @@
          var dropdown_att = block.getFieldValue('ATT');
          var value_name = generator.valueToCode(block, 'NAME', javascript.Order.ATOMIC);
          // TODO: Assemble javascript into code variable.
-         var code = 'sprites[${number_sprite}].${dropdown_att} = ${value_name}\n';
+         var code = `sprites[${number_sprite}].${dropdown_att} = ${value_name}\n`;
          return code;
          };
          javascript.javascriptGenerator.forBlock['raw_block'] = function(block, generator) {
@@ -467,7 +467,7 @@
            // TODO: Assemble javascript into code variable.
            var code = value_code;
            // TODO: Change ORDER_NONE to the correct strength.
-           return [code, Blockly.javascript.ORDER_NONE];
+           return [code, Blockly.javascript.ORDER_MEMBER];
          };
          function execute(){
             const code = javascript.javascriptGenerator.workspaceToCode(workspace)
