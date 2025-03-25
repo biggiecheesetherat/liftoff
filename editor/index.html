@@ -365,10 +365,20 @@
             </block>
          </category>
          <category name="Raw" colour="#494949">
+            <button text="Read me first!" callbackKey="rawNotice"></button>
             <block type="raw_block">
                <field name="CODE"></field>
             </block>
             <block type="raw_value">
+               <field name="CODE"></field>
+            </block>
+            </block>
+         </category>
+         <category name="Game" colour=230>
+            <block type="sprite">
+               <field name="CODE"></field>
+            </block>
+            <block type="spriteget">
                <field name="CODE"></field>
             </block>
             </block>
@@ -508,6 +518,10 @@
                scaleSpeed : 1.2
              }
          });
+         workspace.registerButtonCallback("rawNotice", rawNotice)
+         function rawNotice(button){
+            alert("If your code has raw blocks and publishing your game on Liftoff services, your game must be manually verified and anything that could be harmful to the player will result in the game being denied. Use raw blocks only when necessary.")
+         }
       </script>
    </body>
 </html>
