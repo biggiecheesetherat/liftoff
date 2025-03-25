@@ -364,6 +364,17 @@
                <field name="DIRECTION">1</field>
             </block>
          </category>
+         <category name="Functions" colour="#995ba5" custom="PROCEDURE"/>
+         <sep></sep>
+         <category name="Game" colour=315>
+            <block type="sprite">
+               <field name="CODE"></field>
+            </block>
+            <block type="spriteget">
+               <field name="CODE"></field>
+            </block>
+            </block>
+         </category>
          <category name="Raw" colour="#494949">
             <button text="Read me first!" callbackKey="rawNotice"></button>
             <block type="raw_block">
@@ -374,16 +385,7 @@
             </block>
             </block>
          </category>
-         <category name="Game" colour=230>
-            <block type="sprite">
-               <field name="CODE"></field>
-            </block>
-            <block type="spriteget">
-               <field name="CODE"></field>
-            </block>
-            </block>
-         </category>
-         <category name="Functions" colour="#995ba5" custom="PROCEDURE"/>
+         <sep></sep>
       </xml>
       <script>
          Blockly.Blocks['raw_value'] = {
@@ -420,7 +422,7 @@
                  .appendField("to");
              this.setPreviousStatement(true, null);
              this.setNextStatement(true, null);
-             this.setColour(230);
+             this.setColour(315);
              this.setTooltip("");
              this.setHelpUrl("");
          }
@@ -433,7 +435,7 @@
          .appendField("'s")
          .appendField(new Blockly.FieldDropdown([["x","x"], ["y","y"], ["size","size"], ["animation","anim"], ["opacity","opacity"]]), "ATT");
          this.setOutput(true, null);
-         this.setColour(230);
+         this.setColour(315);
          this.setTooltip("");
          this.setHelpUrl("");
          }
