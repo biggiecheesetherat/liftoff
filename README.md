@@ -1,11 +1,14 @@
-# Liftoff 🚀
-Liftoff is a powerful alternative to Julian's Editor, built entirely using HTML, CSS, and JavaScript. It brings block-based programming to the web, making it easy to create and customize interactive projects without the need for external software.
-
-## ⚡ About Liftoff
-Liftoff is designed to be lightweight, fast, and highly customizable. Whether you're building games, simulations, or automation scripts, this platform gives you the flexibility of visual coding while running smoothly in the browser.
-
-## 🧩 Adding Custom Blocks
-Liftoff uses Blockly 10 as its block-based editor. If you're creating custom blocks, make sure to generate them using this Blockly Block Factory. This ensures compatibility with the latest version of Liftoff.
-
-## 🚀 Getting Started
-To start using Liftoff, simply goto [liftoffcoding.top](http://liftoffcoding.top)! No hassle, no risk from installing unknown exes, as long as you have Wi-Fi.
+# Liftoff
+[ [Start Coding](https://liftoffcoding.top/editor) | [Progress](#progress) ]
+## About
+Liftoff is a advanced Julian's editor alternative akin to Scratch and can run anywhere; even a Wii. Whether you have little to no coding experience, or you are just super lazy, anyone can make anything* in Liftoff.
+* Since anything can be made in Liftoff, we dare you to port the entirety of Quake to Liftoff ;)
+## Progress
+[X] Create basic editor
+[X] Add run button
+[ ] Add sprites
+[ ] Add Liftoff network + accounts
+[ ] Add saving/loading to cloud or locally
+[ ] Add Boostcoin (Our virtual currency on Liftoff-exclusive games!)
+[ ] Add exporting to HTML5, Desktop and Mobile
+[ ] Add Nintendo Switch export via Liftoff switch client for Nintendo eShop
