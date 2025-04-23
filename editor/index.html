@@ -493,7 +493,7 @@
                        },
                        create: function () {
                           this.cameras.main.setBackgroundColor("#ffffff");
-                          document.body.appendChild(Object.assign(document.createElement('script'), {text: '${javascript.javascriptGenerator.workspaceToCode(workspace)}'}));
+                          document.body.appendChild(Object.assign(document.createElement('script'), {text: ${javascript.javascriptGenerator.workspaceToCode(workspace).replace(/^'|'$/g, '`')}}));
                        }
                     },
                     physics: {
@@ -511,8 +511,7 @@
             openBase64InNewTab(btoa(
               `<html><head><title>My project</title>
               <style>body {background-color: black;}</style><script src="https://cdn.jsdelivr.net/npm/phaser@3.86.0/dist/phaser.min.js"><\/script></head>
-              <body><canvas id="game" width="320" height="240">
-              A game made in Liftoff.</canvas>
+              <body>
               <script>${code}<\/script>
               <noscript style="color: red;">You need JavaScript to play this game.</noscript>
               </body></html>`
