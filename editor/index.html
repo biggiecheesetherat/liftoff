@@ -48,9 +48,9 @@
             Edit
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" aria-disabled="true">Work</a></li>
-            <li><a class="dropdown-item" href="#" aria-disabled="true">in</a></li>
-            <li><a class="dropdown-item" href="#" aria-disabled="true">progress</a></li>
+            <li><a class="dropdown-item" href="#" aria-disabled="true">Sprites</a></li>
+            <li><a class="dropdown-item" href="#" aria-disabled="true">Settings</a></li>
+            <li><a class="dropdown-item" href="#" aria-disabled="true">Plugins-</a></li>
           </ul>
         </li>
          <li class="nav-item">
@@ -405,7 +405,8 @@
          <sep></sep>
       </xml>
       <script>
-         const debug = false;
+         let debug = false;
+         let sprites = []
          function toggledebug() {
             if(debug){
                alert("Debug is now off")
@@ -467,6 +468,9 @@
          this.setHelpUrl("");
          }
          };
+         function spritesToPhaser(){
+            
+         }
          javascript.javascriptGenerator.forBlock['spriteget'] = function(block, generator) {
          var number_sprite = block.getFieldValue('SPRITE');
          var dropdown_att = block.getFieldValue('ATT');
