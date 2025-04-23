@@ -505,10 +505,12 @@
             };
             const game = new Phaser.Game(config);
             `
-            if(debug){alert("Debug: "+removeSurroundingQuotes(code));};
+            if(debug){
+               alert("Debug: "+removeSurroundingQuotes(code));
+            };
             openBase64InNewTab(btoa(
               `<html><head><title>My project</title>
-              <style>body {background-color: black;}</style><script src="//cdn.jsdelivr.net/npm/phaser@3.86.0/dist/phaser.min.js"><\/script></head>
+              <style>body {background-color: black;}</style><script src="https://cdn.jsdelivr.net/npm/phaser@3.86.0/dist/phaser.min.js"><\/script></head>
               <body><canvas id="game" width="320" height="240">
               A game made in Liftoff.</canvas>
               <script>${code}<\/script>
