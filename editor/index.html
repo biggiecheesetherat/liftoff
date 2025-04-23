@@ -46,6 +46,7 @@
          <li class="navbar1"><a class="navbar3" href="#home">File</a></li>
          <li class="navbar1"><a class="navbar3"href="#news">Edit</a></li>
          <li class="navbar1"><a class="navbar3"href="#"onclick="execute()">Run</a></li>
+         <li class="navbar1"><a class="navbar3"href="#"onclick="toggledebug()">Debug</a></li>
          <li class="navbar1"><a class="navbar3" href="#" onclick="alert('Liftoff Alpha by Themeatly2 + Harsizcool');">Help</a></li>
       </ul>
       <div id="blocklyDiv"></div>
@@ -388,6 +389,16 @@
          <sep></sep>
       </xml>
       <script>
+         const debug = false;
+         function toggledebug() {
+            if(debug){
+               alert("Debug is now off")
+               debug = false
+            } else {
+               alert("Debug is now on")
+               debug = true
+            };
+         };
          Blockly.Blocks['raw_value'] = {
            init: function() {
              this.appendValueInput("CODE")
@@ -470,11 +481,34 @@
            return [code, Blockly.javascript.ORDER_MEMBER];
          };
          function execute(){
-            const code = javascript.javascriptGenerator.workspaceToCode(workspace)
-            alert("Debug: "+removeSurroundingQuotes(code));
+            const code = `
+            const config = {
+                    type: Phaser.AUTO,
+                    width: 320,
+                    height: 240,
+                    backgroundColor: "#000000",
+                    scene: {
+                       preload: function () {
+                          const loadTxt = this.add.text(80,100,'Loading...', {font: "16px Arial", fill: "#ffffff"});
+                       },
+                       create: function () {
+                       this.cameras.main.setBackgroundColor("#ffffff");
+                       ${javascript.javascriptGenerator.workspaceToCode(workspace)}
+                       }
+                    },
+                    physics: {
+                                 default: 'arcade',
+                                 arcade: {
+                                                 gravity: { y: 200 }
+                                 }
+                             }
+            };
+            const game = new Phaser.Game(config);
+            `
+            if(debug){alert("Debug: "+removeSurroundingQuotes(code));};
             openBase64InNewTab(btoa(
               `<html><head><title>My project</title>
-              <style>body {background-color: black;}</style></head>
+              <style>body {background-color: black;}</style><script src="//cdn.jsdelivr.net/npm/phaser@3.86.0/dist/phaser.min.js"><\/script></head>
               <body><canvas id="game" width="320" height="240">
               A game made in Liftoff.</canvas>
               <script>${code}<\/script>
@@ -483,7 +517,7 @@
           ), "text/html");
          }
          function removeSurroundingQuotes(str) {
-             if ((str.startsWith('"') && str.endsWith('"')) || (str.startsWith("'") && str.endsWith("'"))) {
+             if ((str.startsWith('"') && str.endsWith('"')) || (str.startsWith("'") && str.endsWith("'")) || (str.startsWith("\`") && str.endsWith("\`"))) {
                  return str.slice(1, -1);
              }
              return str;
