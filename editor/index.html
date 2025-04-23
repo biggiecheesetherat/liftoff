@@ -493,7 +493,7 @@
                        },
                        create: function () {
                           this.cameras.main.setBackgroundColor("#ffffff");
-                          document.body.appendChild(Object.assign(document.createElement('script'), {text: ${javascript.javascriptGenerator.workspaceToCode(workspace).replace(/^'|'$/g, '`')}}));
+                          document.body.appendChild(Object.assign(document.createElement('script'), {text: ${javascript.javascriptGenerator.workspaceToCode(workspace).replace(/^'(.*)'$/, '`$1`')}}));
                        }
                     },
                     physics: {
