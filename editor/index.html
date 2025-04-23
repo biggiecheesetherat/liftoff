@@ -492,8 +492,8 @@
                           const loadTxt = this.add.text(80,100,'Loading...', {font: "16px Arial", fill: "#ffffff"});
                        },
                        create: function () {
-                       this.cameras.main.setBackgroundColor("#ffffff");
-                       ${javascript.javascriptGenerator.workspaceToCode(workspace)}
+                          this.cameras.main.setBackgroundColor("#ffffff");
+                          document.body.appendChild(Object.assign(document.createElement('script'), {text: '${javascript.javascriptGenerator.workspaceToCode(workspace)}'}));
                        }
                     },
                     physics: {
