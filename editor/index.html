@@ -18,9 +18,13 @@
          font-family: arial;
          }
          #blocklyDiv {
-         flex-grow: 1;
-         height: 100%;
-         }
+  position: absolute;
+  top: 56px; /* height of the top bar */
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
       </style>
    </head>
    <body>
@@ -82,9 +86,6 @@
       <br>
       <div id="blocklyDiv"></div>
       <xml id="toolbox" style="display: none">
-         <category name="Logic" colour="#5b80a5"></category>
-         <category name="Logic" colour="#5b80a5"></category>
-         <category name="Logic" colour="#5b80a5"></category>
          <category name="Logic" colour="#5b80a5">
             <block type="controls_if"></block>
             <block type="logic_compare">
