@@ -604,7 +604,7 @@ async function generateProject() {
   zip.file("sprites.txt", JSON.stringify(sprites));
   zip.file("code.json", JSON.stringify(Blockly.serialization.workspaces.save(workspace)));
   const blob = await zip.generateAsync({ type: "blob" });
-  await saveZipBlob(blob, `${document.getElementById("pname")}.liftoff`);
+  await saveZipBlob(blob, `${document.getElementById("pname").value}.liftoff`);
 }
 async function saveZipBlob(zipBlob, suggestedName = "project.liftoff") {
   try {
