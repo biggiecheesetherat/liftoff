@@ -25,6 +25,21 @@
    </head>
    <body>
          <noscript>Enable Javascript</noscript>
+      <div class="modal fade" id="smModal" tabindex="-1" aria-labelledby="smModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="smModalLabel">Sprite Manager</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <iframe id="sm" width="600" height="400" src="/spritemanager.html"></iframe>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
          <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-bottom" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="https://liftoffcoding.top">Liftoff</a>
@@ -48,7 +63,7 @@
             Edit
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" aria-disabled="true">Sprites</a></li>
+            <li><a class="dropdown-item" href="#" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#smModal">Sprites</a></li>
             <li><a class="dropdown-item" href="#" aria-disabled="true">Settings</a></li>
             <li><a class="dropdown-item" href="#" aria-disabled="true">Plugins-</a></li>
           </ul>
