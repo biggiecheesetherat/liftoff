@@ -599,21 +599,21 @@
          function rawNotice(button){
             alert("If your code has raw blocks and publishing your game on Liftoff services, your game must be manually verified and anything that could be harmful to the player will result in the game being denied. Use raw blocks only when necessary.")
          }
-         async function generateProject() {
+async function generateProject() {
   const zip = new JSZip();
   zip.file("sprites.txt", JSON.stringify(sprites));
   zip.file("code.json", JSON.stringify(Blockly.serialization.workspaces.save(myWorkspace)));
   const blob = await zip.generateAsync({ type: "blob" });
   await saveZipBlob(blob, `${document.getElementById("pname")}.liftoff`);
 }
-         async function saveZipBlob(zipBlob, suggestedName = "project.liftoff") {
+async function saveZipBlob(zipBlob, suggestedName = "project.liftoff") {
   try {
     const fileHandle = await window.showSaveFilePicker({
       suggestedName,
       types: [
         {
           description: "Liftoff Project",
-          accept: { "application/octet-stream": [".liftoff"] },
+          accept: { "application/x-liftoff-project": [".liftoff"] },
         },
       ],
     });
