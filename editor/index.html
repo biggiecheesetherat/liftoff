@@ -25,10 +25,13 @@
   right: 0;
   bottom: 0;
 }
-
+  .frame-thumb img {
+    max-height: 80px;
+    margin-right: 10px;
+  }
       </style>
    </head>
-   <body>
+   <body data-bs-theme="dark">
          <noscript>Enable Javascript</noscript>
       <div class="modal fade" id="smModal" tabindex="-1" aria-labelledby="smModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -38,14 +41,61 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <iframe id="sm" width="100%" height="400" src="/editor/spritemanager.html"></iframe>
+            <div id="sprite-editor" style="display: none;">
+        <textarea id="sprite-code" style="width: 100%; height: 200px;"></textarea><br>
+        <button onclick="saveSprite()">Save</button>
+    </div>
+
+    <script>
+        // Shared sprite array
+        const sprites = [];
+        let editingIndex = -1;
+
+        function openSpriteEditor(initialSprite = null, index = -1) {
+            editingIndex = index;
+            document.getElementById('sprite-editor').style.display = 'block';
+            if (initialSprite) {
+                document.getElementById('sprite-code').value = JSON.stringify(initialSprite, null, 2);
+            } else {
+                document.getElementById('sprite-code').value = '';
+            }
+        }
+
+        function saveSprite() {
+            const code = document.getElementById('sprite-code').value;
+            try {
+                const parsed = JSON.parse(code);
+
+                // Validate and sanitize fields
+                const sprite = {
+                    name: parsed.name || 'Unnamed',
+                    x: parseFloat(parsed.x) || 0,
+                    y: parseFloat(parsed.y) || 0,
+                    scale: parseFloat(parsed.scale) || 1,
+                    opacity: parseFloat(parsed.opacity) || 1,
+                    animations: Array.isArray(parsed.animations) ? parsed.animations.filter(a => typeof a === 'string') : []
+                };
+
+                if (editingIndex === -1) {
+                    sprites.push(sprite);
+                } else {
+                    sprites[editingIndex] = sprite;
+                }
+
+                console.log('Saved sprite:', sprite);
+                document.getElementById('sprite-editor').style.display = 'none';
+            } catch (err) {
+                alert('Invalid JSON format.\n' + err.message);
+            }
+        }
+    </script>
       </div>
       <div class="modal-footer">
       </div>
     </div>
   </div>
 </div>
-         <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
+         <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="https://liftoffcoding.top">Liftoff</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
