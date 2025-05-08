@@ -424,8 +424,11 @@
          <sep></sep>
       </xml>
       <script>
+         if (window.location.host == "https://api.allorigins.win" || window.location.host == "https://corsproxy.io") {
+            alert("Currently, Specific features on Liftoff (Like the sprite manager) will not work if liftoffcoding.top is blocked by your network administrator. Please contact your IT/Admin about unblocking liftoff.")
          let debug = false;
          let sprites = []
+         if 
          function toggledebug() {
             if(debug){
                alert("Debug is now off")
