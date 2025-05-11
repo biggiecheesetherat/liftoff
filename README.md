@@ -8,7 +8,7 @@ Liftoff is a advanced Julian's editor alternative akin to Scratch and can run an
 ## Progress
 - [x] Create basic editor
 - [x] Add run button
-- [ ] Add sprites
+- [x] Add sprites
 - [ ] Add Liftoff network + accounts
 - [ ] Add saving/loading to cloud or locally
 - [ ] Add Boostcoin (Our virtual currency on Liftoff-exclusive games!)
