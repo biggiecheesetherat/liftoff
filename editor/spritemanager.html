@@ -76,7 +76,7 @@
     });
 
     function sendSpritesToParent() {
-      window.parent.postMessage({ type: "spritesUpdated", payload: sprites }, "*");
+      window.parent.postMessage({ type: "sprites", payload: sprites }, "*");
     }
 
     function loadSprite(index) {
