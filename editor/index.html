@@ -65,7 +65,7 @@
                      Edit
                      </a>
                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" aria-disabled="false" data-bs-toggle="modal" data-bs-target="#smModal">Sprites</a></li>
+                        <li><a class="dropdown-item" href="#" aria-disabled="false" onclick="openSM();">Sprites</a></li>
                         <li><a class="dropdown-item" href="#" aria-disabled="true">Settings</a></li>
                         <li><a class="dropdown-item" href="#" aria-disabled="true">Plugins</a></li>
                      </ul>
@@ -517,6 +517,21 @@
            // TODO: Change ORDER_NONE to the correct strength.
            return [code, Blockly.javascript.ORDER_MEMBER];
          };
+        // my code has scoliosis :3
+        window.addEventListener("message", (event) => {
+  if (event.data.type === "sprites") {
+    sprites = event.data.payload;
+  }
+});
+        function openSM(){
+            smWindow = window.open("https://liftoffcoding.top/editor/spritemanager.html", "_blank", "width=800,height=600");
+            setTimeout(() => {
+                if (smWindow && smWindow.postMessage) {
+                  smWindow.postMessage({ type: "loadSprites", payload: sprites }, "*");
+                  clearInterval(trySend);
+                }
+            }, 100);
+        }
          function execute(){
             const code = `
             const config = {
