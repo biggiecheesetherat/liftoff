@@ -37,7 +37,198 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                  <iframe id="sm" src="https://liftoffcoding.top/editor/spritemanager.html" width="100%" height="100%"></iframe>
+                  <!-- Begin Inline Sprite Manager -->
+<div id="spriteManager" class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <h4>Sprite Manager</h4>
+      <ul class="list-group mb-3" id="spriteList"></ul>
+      <button class="btn btn-success" onclick="addNewSprite()">Add New Sprite</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sprite Editor Modal -->
+<div class="modal" id="modal" tabindex="-2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Sprite Form -->
+        <form id="spriteForm">
+          <div class="mb-3">
+            <label class="form-label">Sprite Name</label>
+            <input type="text" class="form-control" id="spritename">
+          </div>
+          <div class="mb-3 row">
+            <div class="col">
+              <label class="form-label">X</label>
+              <input type="number" class="form-control" id="x">
+            </div>
+            <div class="col">
+              <label class="form-label">Y</label>
+              <input type="number" class="form-control" id="y">
+            </div>
+            <div class="col">
+              <label class="form-label">Scale</label>
+              <input type="number" class="form-control" id="scale" step="0.1">
+            </div>
+            <div class="col">
+              <label class="form-label">Opacity</label>
+              <input type="number" class="form-control" id="opacity" step="0.1" min="0" max="1">
+            </div>
+          </div>
+          <h5>Animations</h5>
+          <div id="animationsContainer"></div>
+          <button type="button" class="btn btn-secondary mt-2" onclick="addAnimation()">Add Animation</button>
+        </form>
+        <button class="btn btn-primary" data-bs-dismiss="modal" onclick="saveSprite()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+let currentSpriteIndex = 0;
+
+function updateSprites(){
+    sprites = event.data.payload;
+    refreshSpriteList();
+    if (sprites.length > 0) loadSprite(0);
+};
+   function loadSprite(index) {
+      currentSpriteIndex = index;
+      const sprite = sprites[index];
+      document.getElementById("spritename").value = sprite[0];
+      document.getElementById("x").value = sprite[1];
+      document.getElementById("y").value = sprite[2];
+      document.getElementById("scale").value = sprite[3];
+      document.getElementById("opacity").value = sprite[4];
+
+      const container = document.getElementById("animationsContainer");
+      container.innerHTML = "";
+      sprite[6].forEach((anim, animIndex) => {
+        const animEl = document.createElement("div");
+        animEl.className = "border rounded p-3 mb-3";
+        animEl.innerHTML = `
+          <div class="d-flex justify-content-between align-items-center">
+            <h6>Animation ${animIndex + 1}</h6>
+            <button class="btn btn-sm btn-danger" onclick="deleteAnimation(${animIndex})">Delete</button>
+          </div>
+          <div class="row mb-2">
+            <div class="col">
+              <label>Name</label>
+              <input type="text" class="form-control anim-name" value="${anim[0]}">
+            </div>
+            <div class="col">
+              <label>Frame Delay</label>
+              <input type="number" class="form-control anim-delay" value="${anim[2]}">
+            </div>
+            <div class="col">
+              <label>Loops</label>
+              <input type="number" class="form-control anim-loops" value="${anim[3]}">
+            </div>
+          </div>
+          <div class="mb-2">
+            <label>Frames</label>
+            <div class="d-flex flex-wrap gap-2" id="frames-${animIndex}">
+              ${anim[1].map((uri, i) => `
+                <div class="frame-thumb" data-frame-index="${i}">
+                  <img src="${uri}" alt="frame">
+                  <button class="btn btn-sm btn-outline-danger mt-1" onclick="deleteFrame(${animIndex}, ${i})">X</button>
+                </div>`).join('')}
+            </div>
+            <input type="file" multiple class="form-control mt-2" accept="image/*" onchange="handleFrameUpload(event, ${animIndex})">
+          </div>
+        `;
+        container.appendChild(animEl);
+      });
+      
+    }
+
+    function saveSprite() {
+      const sprite = sprites[currentSpriteIndex];
+      sprite[0] = document.getElementById("spritename").value;
+      sprite[1] = parseFloat(document.getElementById("x").value);
+      sprite[2] = parseFloat(document.getElementById("y").value);
+      sprite[3] = parseFloat(document.getElementById("scale").value);
+      sprite[4] = parseFloat(document.getElementById("opacity").value);
+
+      const newAnims = [];
+      const animElements = document.querySelectorAll("#animationsContainer > div");
+      animElements.forEach((el, index) => {
+        const name = el.querySelector(".anim-name").value;
+        const delay = parseInt(el.querySelector(".anim-delay").value);
+        const loops = parseInt(el.querySelector(".anim-loops").value);
+        const frames = Array.from(el.querySelectorAll(`#frames-${index} img`)).map(img => img.src);
+        newAnims.push([name, frames, delay, loops]);
+      });
+      sprite[6] = newAnims;
+      refreshSpriteList();
+    }
+
+    function addAnimation() {
+      sprites[currentSpriteIndex][6].push(["newanim", [], 100, 1]);
+      loadSprite(currentSpriteIndex);
+    }
+
+    function deleteAnimation(index) {
+      sprites[currentSpriteIndex][6].splice(index, 1);
+      loadSprite(currentSpriteIndex);
+    }
+
+    function deleteFrame(animIndex, frameIndex) {
+      sprites[currentSpriteIndex][6][animIndex][1].splice(frameIndex, 1);
+      loadSprite(currentSpriteIndex);
+    }
+
+    function handleFrameUpload(event, animIndex) {
+      const files = event.target.files;
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          sprites[currentSpriteIndex][6][animIndex][1].push(e.target.result);
+          loadSprite(currentSpriteIndex);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function refreshSpriteList() {
+      const list = document.getElementById("spriteList");
+      list.innerHTML = "";
+      sprites.forEach((sprite, index) => {
+        const item = document.createElement("li");
+        item.className = "list-group-item d-flex justify-content-between align-items-center";
+        item.innerHTML = `
+          <span>${sprite[0]}</span>
+          <div>
+            <button class="btn btn-sm btn-primary me-2" onclick="loadSprite(${index})" data-bs-toggle="modal" data-bs-target="#modal">Edit</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteSprite(${index})">Delete</button>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function addNewSprite() {
+      const newSprite = [`sprite${sprites.length + 1}`, 0, 0, 1.0, 1.0, "", []];
+      sprites.push(newSprite);
+      refreshSpriteList();
+    }
+
+    function deleteSprite(index) {
+      if (confirm(`Delete sprite #"${sprites[index][0]}"?`)) {
+        sprites.splice(index, 1);
+        refreshSpriteList();
+      }
+    }
+  </script>
+
+
+</script>
                </div>
                <div class="modal-footer">
                </div>
