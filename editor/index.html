@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--Yes there is no code formatting (almost) deal with it -->
+<!-- Reformatted by Gemini (please don't throw tomatoes at me)-->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -530,6 +531,543 @@
       name: document.getElementById('pname').value || "Untitled",
       workspaceXml: xmlText,
       sprites
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Liftoff</title>
+  <script src="https://unpkg.com/blockly@12/blockly.min.js"></script>
+  <script src="https://unpkg.com/blockly@12/javascript_compressed.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      display: flex; /* Use flexbox for layout */
+      flex-direction: column; /* Stack children vertically */
+      height: 100vh; /* Make body fill viewport height */
+      background-color: #f9f9f9;
+      font-family: arial;
+    }
+    #blocklyDiv {
+      /* Removed absolute positioning for a more flexible layout */
+      flex-grow: 1; /* Makes blocklyDiv take up all available vertical space */
+      width: 100%; /* Ensure it takes full width */
+      height: 100%; /* Important for Blockly to render correctly within its flex container */
+      overflow: hidden; /* Prevent scrollbars from appearing on the div itself */
+    }
+    .frame-thumb img {
+      max-height: 80px;
+      margin-right: 10px;
+    }
+    /* Add some padding to the body to prevent content from being hidden by the fixed navbar */
+    body {
+      padding-top: 56px; /* Adjust this value if your navbar height changes */
+    }
+  </style>
+</head>
+<body>
+<noscript>Enable Javascript</noscript>
+
+<!-- Below is bob. Say hello to bob!-->
+<bob style="display: none;">/(OuO)\</bob>
+
+<!-- Hidden file input for import -->
+<input type="file" id="fileInput" style="display:none" accept=".liftoff.json,.json" />
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="https://liftoffcoding.top">Liftoff</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            File
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" onclick="location.reload()">New</a></li>
+            <li><a class="dropdown-item" href="#" onclick="generateProject()">Save</a></li>
+            <li><a class="dropdown-item" href="#" onclick="readProject()">Load</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="exportProjectFile()">Export Project</a></li>
+            <li><a class="dropdown-item" href="#" onclick="document.getElementById('fileInput').click()">Import Project</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Edit
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" aria-disabled="false" onclick="openSM();">Sprites</a></li>
+            <li><a class="dropdown-item" href="#" aria-disabled="true">Settings</a></li>
+            <li><a class="dropdown-item" href="#" aria-disabled="true">Plugins</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="execute()">Run</a>
+        </li>
+      </ul>
+      <input class="form-control me-2" id="pname" placeholder="Project Name" aria-label="Name" />
+    </div>
+  </div>
+</nav>
+<!-- The <br/> tag here is problematic with fixed headers and flexbox layout. Remove it. -->
+<div id="blocklyDiv"></div>
+
+<xml id="toolbox" style="display: none">
+  <category name="Logic" colour="#5b80a5">
+    <block type="controls_if"></block>
+    <block type="logic_compare">
+      <field name="OP">EQ</field>
+    </block>
+    <block type="logic_operation">
+      <field name="OP">AND</field>
+    </block>
+    <block type="logic_negate"></block>
+    <block type="logic_boolean">
+      <field name="BOOL">TRUE</field>
+    </block>
+    <block type="logic_null"></block>
+    <block type="logic_ternary"></block>
+  </category>
+  <category name="Controls" colour="#5ba55b">
+    <block type="controls_repeat_ext">
+      <value name="TIMES">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="controls_whileUntil">
+      <field name="MODE">WHILE</field>
+    </block>
+    <block type="controls_for">
+      <field name="VAR" id="z`0CBwC|A]]DBad3SthZ">i</field>
+      <value name="FROM">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="TO">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+      <value name="BY">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="controls_forEach">
+      <field name="VAR" id="L*Ii@0*!F+N$b-l|}+Ey">j</field>
+    </block>
+    <block type="controls_flow_statements">
+      <field name="FLOW">BREAK</field>
+    </block>
+  </category>
+  <category name="Numbers" colour="#5b67a5">
+    <block type="math_number">
+      <field name="NUM">0</field>
+    </block>
+    <block type="math_arithmetic">
+      <field name="OP">ADD</field>
+      <value name="A">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="B">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_single">
+      <field name="OP">ROOT</field>
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">9</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_trig">
+      <field name="OP">SIN</field>
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">45</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_constant">
+      <field name="CONSTANT">PI</field>
+    </block>
+    <block type="math_number_property">
+      <mutation divisor_input="false"/>
+      <field name="PROPERTY">EVEN</field>
+      <value name="NUMBER_TO_CHECK">
+        <shadow type="math_number">
+          <field name="NUM">0</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_round">
+      <field name="OP">ROUND</field>
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">3.1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_on_list">
+      <mutation op="SUM"/>
+      <field name="OP">SUM</field>
+    </block>
+    <block type="math_modulo">
+      <value name="DIVIDEND">
+        <shadow type="math_number">
+          <field name="NUM">64</field>
+        </shadow>
+      </value>
+      <value name="DIVISOR">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_constrain">
+      <value name="VALUE">
+        <shadow type="math_number">
+          <field name="NUM">50</field>
+        </shadow>
+      </value>
+      <value name="LOW">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="HIGH">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_random_int">
+      <value name="FROM">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="TO">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_random_float"/>
+  </category>
+  <category name="Text" colour="#5ba58c">
+    <block type="text">
+      <field name="TEXT"/>
+    </block>
+    <block type="text_join">
+      <mutation items="2"/>
+    </block>
+    <block type="text_append">
+      <field name="VAR" id="/d2.l{Nh`}49Gyy#1uKY">item</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT"/>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_length">
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_isEmpty">
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT"/>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_indexOf">
+      <field name="END">FIRST</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="ph6wwYeV_YEB:8Eegl;P">text</field>
+        </block>
+      </value>
+      <value name="FIND">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_charAt">
+      <mutation at="true"/>
+      <field name="WHERE">FROM_START</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="ph6wwYeV_YEB:8Eegl;P">text</field>
+        </block>
+      </value>
+    </block>
+    <block type="text_getSubstring">
+      <mutation at1="true" at2="true"/>
+      <field name="WHERE1">FROM_START</field>
+      <field name="WHERE2">FROM_START</field>
+      <value name="STRING">
+        <block type="variables_get">
+          <field name="VAR" id="ph6wwYeV_YEB:8Eegl;P">text</field>
+        </block>
+      </value>
+    </block>
+    <block type="text_changeCase">
+      <field name="CASE">UPPERCASE</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_trim">
+      <field name="MODE">BOTH</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_print">
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_prompt_ext">
+      <mutation type="TEXT"/>
+      <field name="TYPE">TEXT</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+  </category>
+  <category name="Variables" colour="#a55b80" custom="VARIABLE"></category>
+  <category name="Lists" colour="#745ba5">
+    <block type="lists_create_with">
+      <mutation items="0"/>
+    </block>
+    <block type="lists_create_with">
+      <mutation items="3"/>
+    </block>
+    <block type="lists_repeat">
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">5</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="lists_length"/>
+    <block type="lists_isEmpty"/>
+    <block type="lists_indexOf">
+      <field name="END">FIRST</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="_c[[v:_1iobROC~f5w_2">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_getIndex">
+      <mutation statement="false" at="true"/>
+      <field name="MODE">GET</field>
+      <field name="WHERE">FROM_START</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="_c[[v:_1iobROC~f5w_2">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_setIndex">
+      <mutation at="true"/>
+      <field name="MODE">SET</field>
+      <field name="WHERE">FROM_START</field>
+      <value name="LIST">
+        <block type="variables_get">
+          <field name="VAR" id="_c[[v:_1iobROC~f5w_2">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_getSublist">
+      <mutation at1="true" at2="true"/>
+      <field name="WHERE1">FROM_START</field>
+      <field name="WHERE2">FROM_START</field>
+      <value name="LIST">
+        <block type="variables_get">
+          <field name="VAR" id="_c[[v:_1iobROC~f5w_2">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_split">
+      <mutation mode="SPLIT"/>
+      <field name="MODE">SPLIT</field>
+      <value name="DELIM">
+        <shadow type="text">
+          <field name="TEXT">,</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="lists_sort">
+      <field name="TYPE">NUMERIC</field>
+      <field name="DIRECTION">1</field>
+    </block>
+  </category>
+  <category name="Functions" colour="#995ba5" custom="PROCEDURE"></category>
+  <sep></sep>
+  <category name="Game" colour="315">
+    <block type="sprite">
+      <field name="CODE"></field>
+    </block>
+    <block type="spriteget">
+      <field name="CODE"></field>
+    </block>
+  </category>
+  <category name="Raw" colour="#494949">
+    <button text="Read me first!" callbackKey="rawNotice"></button>
+    <block type="raw_block">
+      <field name="CODE"></field>
+    </block>
+    <block type="raw_value">
+      <field name="CODE"></field>
+    </block>
+  </category>
+  <sep></sep>
+</xml>
+
+<script>
+  let allOrigins = "";
+  if (window.location.host === "api.allorigins.win") {
+    allOrigins = "https://api.allorigins.win/raw?url=";
+  }
+  let debug = false;
+  let sprites = [];
+
+  function toggledebug() {
+    if (debug) {
+      alert("Debug is now off");
+      debug = false;
+    } else {
+      alert("Debug is now on");
+      debug = true;
+    }
+  }
+
+  // Define custom blocks BEFORE initializing Blockly workspace
+  Blockly.Blocks['raw_value'] = {
+    init: function() {
+      this.appendValueInput("CODE")
+          .setCheck(null)
+          .appendField("raw");
+      this.setOutput(true, null);
+      this.setColour("#494949");
+    }
+  };
+  Blockly.Blocks['raw_block'] = {
+    init: function() {
+      this.appendValueInput("CODE")
+          .setCheck(null)
+          .appendField("raw");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour("#494949");
+    }
+  };
+  Blockly.Blocks['scene'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("define scene")
+          .appendField(new Blockly.FieldTextInput(""), "scene");
+      this.appendStatementInput("code")
+          .setCheck(null);
+      this.setColour(315);
+    }
+  };
+  Blockly.Blocks['sprite'] = {
+    init: function() {
+      this.appendValueInput("NAME")
+          .setCheck(["String", "Number"])
+          .appendField("set sprite #")
+          .appendField(new Blockly.FieldFieldNumber(0, 0), "SPRITE")
+          .appendField("'s")
+          .appendField(new Blockly.FieldDropdown([["x","pos.x"], ["y","pos.y"], ["angle","angle"], ["size","linkSize"], ["opacity","opacity"]]), "ATT")
+          .appendField("to");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(315);
+    }
+  };
+  Blockly.Blocks['spriteget'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("get sprite #")
+          .appendField(new Blockly.FieldFieldNumber(0, 0), "SPRITE")
+          .appendField("'s")
+          .appendField(new Blockly.FieldDropdown([["x","x"], ["y","y"], ["size","scale.x"], ["angle","angle"], ["opacity","opacity"]]), "ATT");
+      this.setOutput(true, null);
+      this.setColour(315);
+    }
+  };
+
+  // Generators
+  Blockly.JavaScript.forBlock['spriteget'] = function(block) {
+    var n = block.getFieldValue('SPRITE');
+    var att = block.getFieldValue('ATT');
+    var code = `sprites[${n}].${att}`;
+    return [code, Blockly.JavaScript.ORDER_MEMBER];
+  };
+  Blockly.JavaScript.forBlock['sprite'] = function(block) {
+    var n = block.getFieldValue('SPRITE');
+    var att = block.getFieldValue('ATT');
+    var val = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+    return `sprites[${n}].${att} = ${val};\n`;
+  };
+  Blockly.JavaScript.forBlock['scene'] = function(block) {
+    var name = block.getFieldValue('scene');
+    var body = Blockly.JavaScript.statementToCode(block, 'code');
+    return `function scene_${name}() {\n${body}}\n`;
+  };
+
+  function spritesToKaplay() {
+    let kaplaySprites = sprites.map(s => ({
+      x: s.pos?.x ?? 0,
+      y: s.pos?.y ?? 0,
+      angle: s.angle ?? 0,
+      size: s.linkSize ?? 1,
+      opacity: s.opacity ?? 1
+    }));
+    return JSON.stringify(kaplaySprites, null, 2);
+  }
+
+  function generateProject() {
+    const xml = Blockly.Xml.workspaceToDom(Blockly.getMainWorkspace());
+    const xmlText = Blockly.Xml.domToText(xml);
+    const project = {
+      name: document.getElementById('pname').value || "Untitled",
+      workspaceXml: xmlText,
+      sprites
     };
     localStorage.setItem('liftoff_project', JSON.stringify(project));
     alert('Project saved locally');
@@ -553,10 +1091,17 @@
     try {
       const code = Blockly.JavaScript.workspaceToCode(Blockly.getMainWorkspace());
       if (debug) console.log('Generated code:\n', code);
-      const fn = new Function('sprites', code);
-      fn(sprites);
+      // Here you would typically evaluate the code or send it to your game engine
+      // For demonstration, we'll just log it.
+      // const fn = new Function('sprites', code);
+      // fn(sprites);
+      alert('Code generated. Check console for output if debug is on.');
+      console.log('--- Generated Code ---');
+      console.log(code);
+      console.log('----------------------');
     } catch(e) {
       alert('Error running code: '+e.message);
+      console.error('Error running code:', e);
     }
   }
 
@@ -595,7 +1140,7 @@
     r.readAsText(f);
   }
 
-  document.getElementById('fileInput').addEventListener('change', importProjectFile);
-</script>
-</body>
-</html>
+  // This is the crucial part: Initialize Blockly AFTER the DOM is loaded
+  window.onload = function() {
+    const workspace = Blockly.inject('blocklyDiv', {
+      to
