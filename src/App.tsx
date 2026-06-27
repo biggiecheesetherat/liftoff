@@ -11,17 +11,26 @@ interface Sprite {
   opacity: number;
 }
 
+// Toolbox defined as a string to avoid JSX parsing errors
+const toolbox = `
+<xml id="toolbox" style="display: none">
+  <category name="Game" colour="315">
+    <block type="sprite"></block>
+  </category>
+</xml>`;
+
 const App: React.FC = () => {
   const blocklyRef = useRef<HTMLDivElement>(null);
   const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null);
   const [projectName, setProjectName] = useState("Untitled Project");
-  const [sprites, setSprites] = useState<Sprite[]>([]);
+  // Added usage to state to satisfy TS6133
+  const [sprites] = useState<Sprite[]>([]);
 
   useEffect(() => {
     initCustomBlocks();
     if (blocklyRef.current) {
       workspaceRef.current = Blockly.inject(blocklyRef.current, {
-        toolbox: document.getElementById('toolbox') as HTMLElement,
+        toolbox: toolbox, 
         grid: { spacing: 20, length: 3, colour: '#ccc', snap: true },
         trashcan: true,
       });
@@ -32,12 +41,12 @@ const App: React.FC = () => {
   const handleRun = () => {
     if (!workspaceRef.current) return;
     const code = javascriptGenerator.workspaceToCode(workspaceRef.current);
-    
-    // Inject the game engine logic here (similar to your existing execute() function)
     const gameHtml = generateGameHtml(code, sprites, projectName);
     const tab = window.open();
-    tab?.document.write(gameHtml);
-    tab?.document.close();
+    if (tab) {
+      tab.document.write(gameHtml);
+      tab.document.close();
+    }
   };
 
   const saveProject = () => {
@@ -79,20 +88,22 @@ const App: React.FC = () => {
       </nav>
 
       <div ref={blocklyRef} className="flex-grow-1 w-100 mt-5" id="blocklyDiv" />
-
-      {/* Toolbox (Keep this in the DOM or as a string constant) */}
-      <xml id="toolbox" style={{ display: 'none' }}>
-        <category name="Game" colour="315">
-          <block type="sprite"></block>
-        </category>
-        {/* ... other categories */}
-      </xml>
     </div>
   );
 };
 
 export default App;
 
-function generateGameHtml(code: string, sprites: Sprite[], projectName: string) {
-  throw new Error('Function not implemented.');
+function generateGameHtml(code: string, sprites: Sprite[], projectName: string): string {
+  // Logic to inject code into a template
+  return `
+    <html>
+      <head><title>${projectName}</title></head>
+      <body>
+        <script>
+          const sprites = ${JSON.stringify(sprites)};
+          ${code}
+        </script>
+      </body>
+    </html>`;
 }
