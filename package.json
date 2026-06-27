@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,11 @@
   },
   "homepage": "https://github.com/biggiecheesetherat/liftoff#readme",
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@material/web": "^2.4.1",
+    "@mui/material": "^9.1.2",
+    "blockly": "^13.0.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },
